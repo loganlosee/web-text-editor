@@ -19,11 +19,11 @@ module.exports = () => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'src/index.html', // Path to your HTML template
+        template: './index.html',
         title: 'JATE'
       }),
       new InjectManifest({
-        swSrc: './src/src-sw.js', // Path to your source service worker file
+        swSrc: './src-sw.js',
         swDest: 'service-worker.js',
       }),
       new WebpackPwaManifest({
@@ -36,7 +36,7 @@ module.exports = () => {
         publicPath: '/',
         icons: [
           {
-            src: path.resolve('client/src/images/logo.png'), 
+            src: path.resolve('./src/images/logo.png'), 
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
