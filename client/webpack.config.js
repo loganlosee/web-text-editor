@@ -26,7 +26,7 @@ module.exports = () => {
       new WebpackPwaManifest({
         name: 'Just Another Text Editor',
         short_name: 'JATE',
-        description: 'A simple text editor',
+        description: 'A simple text editor with offline capabilities',
         background_color: '#ffffff',
         theme_color: '#555555',
         start_url: '/',
