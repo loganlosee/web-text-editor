@@ -8,15 +8,20 @@ window.addEventListener('beforeinstallprompt', (event) => {
     butInstall.style.display = 'block';
 });
 
-butInstall.addEventListener('click', async () => {
+butInstall.addEventListener('click', () => {
     if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User response to the install prompt: ${outcome}`);
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
         deferredPrompt = null;
+        butInstall.style.display = 'none';
+      });
     }
-    butInstall.style.display = 'none';
-});
+  });
 
 window.addEventListener('appinstalled', (event) => {
     deferredPrompt = null;
