@@ -1,6 +1,5 @@
 import { openDB } from 'idb';
 
-// Init the IDB
 const initdb = async () =>
   openDB('jate', 1, {
     upgrade(db) {
@@ -13,33 +12,24 @@ const initdb = async () =>
     },
   });
 
-// Add content
 export const putDb = async (content) => {
-  console.log('PUT to the database', content);
+  const txtEditorDB = await openDB('jate', 1);
+  const transVar = txtEditorDB.transaction('jate', 'readwrite');
+  const storeVar = transVar.objectStore('jate');
+  const request = storeVar.put({ id: 1, value: content });
 
-  const jateDb = await openDB('jate', 1);
-  const tx = jateDb.transaction('jate', 'readwrite');
-  const store = tx.objectStore('jate');
-
-  const request = store.put({ id: 1, content });
   const result = await request;
-  console.log('🚀 - data saved to the database', result);
+  console.log('Data saved to database', result.value);
 };
 
-// Get all content
 export const getDb = async () => {
-  console.log('GET from the database');
-
-  const jateDb = await openDB('jate', 1);
-  const tx = jateDb.transaction('jate', 'readonly');
-  const store = tx.objectStore('jate');
-
-  const request = store.getAll();
+  const txtEditorDB = await openDB('jate', 'readonly');
+  const storeVar = trasnVar.objectStore('jate');
+  const request = storeVar.get(1);
   const result = await request;
-  console.log('🚀 - data retrieved from the database', result);
-
-  return result?.[result.length - 1]?.content;
+  result
+    ? console.log('Data retrieved from the database', result.value)
+    : console.log('Data not found in the database');
 };
 
 initdb();
-
